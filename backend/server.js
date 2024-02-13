@@ -1,32 +1,22 @@
 import express from "express";
 import { config } from "dotenv";
 import cors from 'cors';
-import {getFriends, addFriend, updateFriend,getFriend, deleteFriend} from './database.js'
+import FriendsRouter from '../backend/routes/friends.js'
 config();
 const PORT = process.env.PORT
 
 const app = express()
 app.use(cors())
 app.use(express.json())
-app.use(express.static('public'))
+app.use(express.static('views'))
+app.use('/friends', FriendsRouter)
 
-app.get('/friends/:id', async (req, res) => {
-    res.send(await getFriend(+req.params.id));
+app.get('/', (req, res)=> {
+    res.send({
+        message:'Bomba'});
 })
 
-app.post ('/friends', async (req, res)=> {
-    const {name, age} = req.body;
-    await addFriend(name, age);
-    res.send(await getFriends())
-})
-
-app.patch('/friends/:id', async (req,res)=>{
-    const{name, age} = req.body
-    await updateFriend(name, age, +req.params.id);
-    res.send(await getFriend(+req.params.id))
-});
-
-app.get('/friends', async (req, res) => {
-    res.send(await getFriends())
+app.post('/', (req, res)=> {
+    res.send(`Hello, ${req.body.name}.  Welcome to the server!`)
 })
 app.listen(PORT, () => console.log(`Server is running on port http://localhost:${PORT}`))

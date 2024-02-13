@@ -1,5 +1,4 @@
 import mysql from 'mysql2';
-
 import {config} from 'dotenv'
 config();
 
@@ -44,11 +43,11 @@ const updateFriend = async (name, age, id) => {
     return updatedFriend
 }
 
-const deleteFriend = async (id) => {
+const deleteFriend = async (name) => {
     const [friend] = await pool.query (`
     DELETE FROM mates
-    WHERE id = ?
-    `, [id])
+    WHERE name = ?
+    `, [name])
  }
 
 
