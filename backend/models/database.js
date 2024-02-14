@@ -43,12 +43,26 @@ const updateFriend = async (name, age, id) => {
     return updatedFriend
 }
 
-const deleteFriend = async (name) => {
+const deleteFriend = async (id) => {
     const [friend] = await pool.query (`
     DELETE FROM mates
-    WHERE name = ?
-    `, [name])
+    WHERE id = ?
+    `, [id])
+    return getFriends(friend)
  }
+// functions for users
 
+// authentication and adding new user
 
- export{getFriends, addFriend, updateFriend,getFriend, deleteFriend}
+const addUser = async(username, password) => {
+    await pool.query (`
+    INSERT INTO users (username, password) VALUES (?,?)
+    `,[username, password]);
+}
+console.log(await addUser("bigdick", "haibo"));
+
+ export{getFriends, addFriend, updateFriend,getFriend, deleteFriend,addUser}
+
+ //.hash sets password bcrypt.hash[password,salt (err, hash password) ] {call mysql} --register user
+ //.compare fetches password bcrypt.compare(password,hashpassword,(err,result)) --logining in with user -- checking if the user is logging in 
+//  bcrypt

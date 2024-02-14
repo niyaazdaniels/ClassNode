@@ -21,6 +21,6 @@ export default{
             res.json(await getFriends())
         },
     deleteOne: async (req,res)=>{
-            res.send(await deleteFriend(req.params.name));
+            res.send(await deleteFriend(+req.params.id));
         }
 }

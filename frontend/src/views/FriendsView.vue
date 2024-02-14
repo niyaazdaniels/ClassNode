@@ -5,7 +5,7 @@
   <div>
     <table>
       <tr>
-        <th>ID</th>
+      <th>ID</th>
       <th>Name</th>
       <th>Age</th>
       <th>Functions</th>
@@ -14,27 +14,60 @@
         <td>{{ friend.id }}</td>
         <td>{{ friend.name }}</td>
         <td>{{ friend.age }}</td>
-        <td><button @click="deleteOne(id)" class="delete-btn">Delete</button></td>
-        <td><button @click="updateOne(id)" class="update-btn">Edit</button></td>
-      </tr>      
-      <button @click="addOne(id)" class="add-btn">Add</button>
+        <td><button @click="onDeleteFriend(friend.id)" class="delete-btn">Delete</button>
+        <button @click="eFriend(friend.id)" class="update-btn">Edit</button></td>
+       </tr>      
+      <button @click="addFriend()" class="add-btn">Add</button>
     </table>
+    <div class="form">
+    <input placeholder="name" v-model="name" name="name" type="text">
+    <input placeholder="age" v-model="age" name="age" type="text" autocomplete="off">
+    
+    </div>
   </div>
     </div>
 </template>
 
 <script>
-import axios from 'axios';
+// import store from '../store/index.js';
 
 export default {
  data(){
+  return{
 
- },
+    name:null,
+    age: null
+  }
+},
  methods:{
     getFriends(){
       return this.$store.dispatch("getFriends")
     }, 
-   
+    onDeleteFriend(id){
+      try {
+        this.$store.dispatch('deleteFriend',id);
+      } catch (error){
+        console.error('Error Deleting Friend', error)
+      } 
+      window.location.reload()
+    }, 
+    addFriend(){
+      try {
+        this.$store.dispatch("addFriend");
+        // Matthew answer
+        // this.$store.dispatch('addFriend', this.$data) --refers to the data function 
+      } catch (error) {
+        console.error('Error Adding User', error)
+      }
+    }, 
+    eFriend(id){
+      let edit = {
+        id:id,
+        name:this.name,
+        age:this.age
+      }
+      this.$store.dispatch("editFriend",edit)
+    }
  },
  mounted(){
   this.getFriends()
@@ -42,12 +75,13 @@ export default {
 }
 </script>
 <style scoped>
-/* You can use SCSS or regular CSS based on your preference */
 div {
   margin: 20px;
 }
 table {
-  width: 100%;
+  position: relative;
+
+  width: 50%;
   border-collapse: collapse;
   margin-top: 10px;
 }
@@ -94,6 +128,12 @@ th {
 }
 .delete-btn:hover, .add-btn:hover {
   background-color: #45A049;
+}
+.form{
+  display: flex;
+  flex-direction: column;
+  width: 10%;
+  padding: 10px;
 }
 </style>
 
