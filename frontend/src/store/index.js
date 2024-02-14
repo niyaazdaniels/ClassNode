@@ -1,58 +1,58 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
 
-const BASE_URL = 'http://localhost:8082'
-// Matthew way
-// const BASE_URL = 'http://localhost:8082/friends'
+const BASE_URL = 'http://localhost:8082/friends'
 
 export default createStore({
   state: {
-    name: '',
-    age: '',
-    friends: ''
-  },
-  getters: {
+    friends: []
   },
   mutations: {
-    setFriends (state, data) {
-      state.friends =data
-    },
-    setName (state, data) {
-      state.name = data
-    }
+    setFriends(state, data) {
+      state.friends = data
+    } 
   },
   actions: {
-    login({commit}, personName){
-      axios.post(BASE_URL + '/login', personName)
-        .then(res => {
-         console.log(res.data);
-      })
-    },
-    getFriends({commit}){
-      axios.get(BASE_URL + "/friends",)
-      .then (res => {
-        commit('setFriends', res.data)
-        console.log(res.data);
-      })
-    },
-    updateOne({commit}, userData) {
+    async login({ commit }, personName) {
       try {
-        const response = axios.patch(`/backend/controller/friends.js`, userData);
-        return response.data;
+        const res = await axios.post(`${BASE_URL}/login`, personName)
+        console.log(res.data)
       } catch (error) {
-        console.error('Error editing user:', error);
-        throw error;
+        console.error('Error during login:', error)
       }
     },
-    // matthew way
-    async getFriends ({commit}) {
-      let {data} = await axios.get(BASE_URL)
-      console.log(data);
-      commit('setFriends',data)
+    async getFriends({ commit }) {
+      try {
+        const res = await axios.get(BASE_URL)
+        commit('setFriends', res.data)
+        console.log(res.data)
+      } catch (error) {
+        console.error('Error getting friends:', error)
+      }
+    },
+    async deleteFriend({ commit }, id) {
+      try {
+        await axios.delete(`${BASE_URL}/${id}`)
+        // Optionally, you can remove the friend from state if necessary
+      } catch (error) {
+        console.error('Error deleting friend:', error)
+      }
+    },
+    async addFriend({ commit }) {
+      try {
+        const name = prompt("Enter friend's name:")
+        const age = prompt("Enter friend's age:")
+        await axios.post(BASE_URL, { name, age })
+        window.location.reload()
+      } catch (error) {
+        console.error('Error adding friend:', error)
+      }
+    },
+    async editFriend({commit}, update){
+      console.log(update);
+      await axios.patch(`${BASE_URL}/`+ update.id, update);
+      window.location.reload()
     }
   },
-  modules: {
-  }
+  modules: {}
 })
-
-// promise pending requires await 
