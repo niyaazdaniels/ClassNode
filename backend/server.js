@@ -22,9 +22,9 @@ app.get('/', (req, res)=> {
 // middleware authenticate when a user signs up
 app.post('/users',(req, res) => {
     const { username, password } = req.body;
-        bcrypt.hash(password, 10,(err,hash) =>{
+        bcrypt.hash(password, 10,async (err,hash) =>{
             if(err) throw err
-
+                await  addUser(username, hash)
             res.send({
                 msg: "You have created an account"
             })
