@@ -59,9 +59,16 @@ const addUser = async(username, password) => {
     INSERT INTO users (username, password) VALUES (?,?)
     `,[username, password]);
 }
-console.log(await addUser("bigdick", "haibo"));
+// returning value
+const checkUser = async (username) => {
+    const [[{password}]] = await pool.query(`
+    SELECT password FROM users WHERE username = ?
+    `,[username])
+    return password
+}
 
- export{getFriends, addFriend, updateFriend,getFriend, deleteFriend,addUser}
+// console.log(await checkUser('hobo'));
+ export{getFriends, addFriend, updateFriend,getFriend, deleteFriend,addUser,checkUser}
 
  //.hash sets password bcrypt.hash[password,salt (err, hash password) ] {call mysql} --register user
  //.compare fetches password bcrypt.compare(password,hashpassword,(err,result)) --logining in with user -- checking if the user is logging in 

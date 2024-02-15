@@ -1,80 +1,121 @@
 <template>
-    <div class="view">
-        <h1>Login</h1>
-        <form @submit.prevent="login" class="login-form">
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" v-model="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" v-model="password" required>
-            </div>
-            <button @click="login()">Login</button>
-        </form>
+    <div class="form-box">
+<div class="form">
+    <span class="title">Sign up</span>
+    <div class="form-container">
+			<input type="username" class="input" placeholder="Username" v-model="username">
+			<input type="password" class="input" placeholder="Password" v-model="password">
     </div>
+    <button @click="signUp">Sign up</button>
+    <br>{{ $store.state.loggedIn }}
+      <button @click="login">Log In</button>
+    </div>
+</div>
 </template>
 <script>
 export default {
     data() {
         return {
-            email: '',
-            password: ''
+            username: null,
+            password: null
         };
-    },
-    methods: {
+    },  
+    computed: {
         login() {
-            console.log(this.$data)
-            this.$store.dispatch('login',this.$data);
+            this.$store.dispatch('logIn',this.$data);
+        },
+        signUp(){
+             this.$store.dispatch('addUser', this.$data)
+            
         }
     }
 }
 </script>
 <style scoped>
-.view {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.form-box {
+  max-width: 300px;
+  background: #f1f7fe;
+  overflow: hidden;
+  border-radius: 16px;
+  color: #010101;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  left: 700px;
 }
-.login-form {
-    width: 300px;
-    padding: 20px;
-    border-radius: 8px;
-    background-color: darkgoldenrod;
+
+.form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 24px 24px;
+  gap: 16px;
+  text-align: center;
 }
-label{
-    color: white;
+
+/*Form text*/
+.title {
+  font-weight: bold;
+  font-size: 1.6rem;
 }
-.form-group {
-    margin-bottom: 20px;
+
+.subtitle {
+  font-size: 1rem;
+  color: #666;
 }
-label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 5px;
+
+/*Inputs box*/
+.form-container {
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: #fff;
+  margin: 1rem 0 .5rem;
+  width: 100%;
 }
-input[type="email"],
-input[type="password"] {
-    width: calc(100% - 20px); /* Adjust width to account for padding */
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+
+.input {
+  background: none;
+  border: 0;
+  outline: 0;
+  height: 40px;
+  width: 100%;
+  border-bottom: 1px solid #eee;
+  font-size: .9rem;
+  padding: 8px 15px;
 }
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: red;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+
+.form-section {
+  padding: 16px;
+  font-size: .85rem;
+  box-shadow: rgb(0 0 0 / 8%) 0 -1px;
 }
-button:hover {
-    background-color: black;
-    color: white;
-    box-shadow: 10px 10px red;
-    transition: 2s;
+
+.form-section a {
+  font-weight: bold;
+  color: #0066ff;
+  transition: color .3s ease;
+}
+
+.form-section a:hover {
+  color: #005ce6;
+  text-decoration: underline;
+}
+
+/*Button*/
+.form button {
+  background-color: #0066ff;
+  color: #fff;
+  border: 0;
+  border-radius: 24px;
+  padding: 10px 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color .3s ease;
+}
+
+.form button:hover {
+  background-color: #00e6cf;
+  color: black;
 }
 </style>
