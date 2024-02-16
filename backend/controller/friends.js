@@ -28,7 +28,7 @@ export default{
             const post = await addUser(username, password)
             res.send(await addUser())
         },
-        logIn: async (req, res, next) => {
+    logIn: async (req, res, next) => {
             const { username, password } = req.body;
                 const hashedPassword = await checkUser(username);
                 bcrypt.compare(password, hashedPassword, (err, result) => {

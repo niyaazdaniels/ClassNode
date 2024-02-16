@@ -1,17 +1,17 @@
 <template>
     <div class="form-box">
 <div class="form">
-    <span class="title">Sign up</span>
-    <div class="form-container">
-			<input type="username" class="input" placeholder="Username" v-model="username">
-			<input type="password" class="input" placeholder="Password" v-model="password">
-    </div>
+  <span class="title">Sign up</span>
+      <div class="form-container">
+			  <input type="username" class="input" placeholder="Username" v-model="username">
+      <input type="password" class="input" placeholder="Password" v-model="password">
+  </div>
     <button @click="signUp">Sign up</button>
-    <br>{{ $store.state.loggedIn }}
       <button @click="login">Log In</button>
+        <br>{{ $store.state.loggedIn }}
+      </div>
     </div>
-</div>
-</template>
+  </template>
 <script>
 export default {
     data() {
@@ -43,7 +43,6 @@ export default {
   position: relative;
   left: 700px;
 }
-
 .form {
   position: relative;
   display: flex;
@@ -51,17 +50,6 @@ export default {
   padding: 32px 24px 24px;
   gap: 16px;
   text-align: center;
-}
-
-/*Form text*/
-.title {
-  font-weight: bold;
-  font-size: 1.6rem;
-}
-
-.subtitle {
-  font-size: 1rem;
-  color: #666;
 }
 
 /*Inputs box*/

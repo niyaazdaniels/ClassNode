@@ -1,5 +1,8 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
+axios.defaults.withCredentials = true; //axios is now accepting headers being sent from the backend -- this allows the cookies to show in the option cookies under application cookies 
+// we have to set the cors option for the above statement 
+
 
 const BASE_URL = 'http://localhost:8082/friends'
 const BASE_URLU = 'http://localhost:8082'

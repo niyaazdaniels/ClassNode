@@ -18,6 +18,7 @@
         <button @click="eFriend(friend.id)" class="update-btn">Edit</button></td>
        </tr>      
       <button @click="addFriend()" class="add-btn">Add</button>
+      <button @click="getFriends" class="add-btn">Get Friends</button>
     </table>
     <div class="form">
     <input placeholder="name" v-model="name" name="name" type="text">
@@ -29,7 +30,6 @@
 </template>
 
 <script>
-// import store from '../store/index.js';
 
 export default {
  data(){
@@ -39,9 +39,13 @@ export default {
     age: null
   }
 },
- methods:{
-    getFriends(){
+computed: {
+  getFriends(){
       return this.$store.dispatch("getFriends")
+},
+
+ methods:{
+    
     }, 
     onDeleteFriend(id){
       try {
@@ -70,7 +74,6 @@ export default {
     }
  },
  mounted(){
-  this.getFriends()
  }
 }
 </script>
